@@ -98,9 +98,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             ]);
         });
 
-        $this->registerMiddleware(
-            $this->app['config']->get('debugbar.route_middleware')
-        );
+        foreach ($this->app['config']->get('debugbar.route_middleware') as $middleware) {
+            $this->registerMiddleware(
+                $middleware
+            );
+        }
     }
 
     /**
