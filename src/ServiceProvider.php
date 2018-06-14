@@ -1,7 +1,5 @@
 <?php namespace Barryvdh\Debugbar;
 
-use Barryvdh\Debugbar\Middleware\DebugbarEnabled;
-use Barryvdh\Debugbar\Middleware\InjectDebugbar;
 use DebugBar\DataFormatter\DataFormatter;
 use DebugBar\DataFormatter\DataFormatterInterface;
 use Illuminate\Contracts\Http\Kernel;
@@ -70,7 +68,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             'namespace' => 'Barryvdh\Debugbar\Controllers',
             'prefix' => $this->app['config']->get('debugbar.route_prefix'),
             'domain' => $this->app['config']->get('debugbar.route_domain'),
-            'middleware' => [DebugbarEnabled::class],
+            'middleware' => $this->app['config']->get('debugbar.route_middleware'),
         ];
 
         $this->getRouter()->group($routeConfig, function($router) {
@@ -100,7 +98,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             ]);
         });
 
-        $this->registerMiddleware(InjectDebugbar::class);
+        $this->registerMiddleware(
+            $this->app['config']->get('debugbar.route_middleware')
+        );
     }
 
     /**

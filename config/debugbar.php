@@ -198,4 +198,19 @@ return [
      | To override default domain, specify it as a non-empty value.
      */
     'route_domain' => null,
+
+    /*
+     |--------------------------------------------------------------------------
+     | DebugBar route middleware
+     |--------------------------------------------------------------------------
+     |
+     | You may need to run your own middleware before the DebugBar middleware
+     | performs its checks and captures the response for processing. You can do
+     | that here. Middleware is processed in the order which it is listed here.
+     |
+     */
+    'route_middleware' => [
+        \Barryvdh\Debugbar\Middleware\DebugbarEnabled::class,
+        \Barryvdh\Debugbar\Middleware\InjectDebugbar::class,
+    ],
 ];
